@@ -43,15 +43,8 @@ function GradientPreview({ theme }: { theme: string }) {
   );
 }
 
-const rowStripeClasses = [
-  'from-indigo-500 to-blue-500',
-  'from-emerald-500 to-teal-500',
-  'from-amber-500 to-orange-500',
-  'from-fuchsia-500 to-purple-500',
-];
-
-export function FileCard({ file, rowIndex, onClick }: FileCardProps) {
-  const stripeClass = rowStripeClasses[rowIndex % rowStripeClasses.length];
+export function FileCard({ file, onClick }: FileCardProps) {
+  const cardGradient = previewGradients[file.preview] || previewGradients.privacy;
 
   return (
     <motion.div
@@ -64,7 +57,7 @@ export function FileCard({ file, rowIndex, onClick }: FileCardProps) {
       onClick={() => onClick(file)}
       className="group cursor-pointer bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
     >
-      <div className={`h-1.5 w-full bg-gradient-to-r ${stripeClass}`} />
+      <div className={`h-1.5 w-full bg-gradient-to-r ${cardGradient.base}`} />
       {/* Preview Area */}
       <div className="relative aspect-video overflow-hidden">
         <GradientPreview theme={file.preview} />
