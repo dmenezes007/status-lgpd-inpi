@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Eye } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { FileItem } from '../types';
@@ -35,6 +36,9 @@ function GradientPreview({ theme }: { theme: string }) {
       <div className={`absolute -top-14 -right-10 h-44 w-44 rounded-full blur-2xl ${gradient.accentB}`} />
       <div className={`absolute -bottom-16 -left-12 h-52 w-52 rounded-full blur-2xl ${gradient.accentA}`} />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.28),transparent_42%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.16),transparent_46%)]" />
+      <div className="absolute inset-0 flex items-center justify-center opacity-25">
+        <ShieldCheck className="h-24 w-24 text-white drop-shadow-md" strokeWidth={1.8} />
+      </div>
     </div>
   );
 }
