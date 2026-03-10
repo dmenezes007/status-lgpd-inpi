@@ -7,6 +7,7 @@ import { cn } from '../utils';
 
 interface FileCardProps {
   file: FileItem;
+  rowIndex: number;
   onClick: (file: FileItem) => void;
 }
 
@@ -42,6 +43,7 @@ function PatternPreview({ theme, id }: { theme: string; id: number }) {
           <circle cx="8" cy="8" r="3" fill={style.b} opacity="0.45" />
           <path d="M0 44L44 0" stroke={style.a} strokeWidth="1.5" opacity="0.35" />
           <path d="M22 0V44" stroke={style.b} strokeWidth="1" opacity="0.25" />
+          <path d="M32 23 l6 2 v4 c0 4 -2.5 7 -6 8 c-3.5 -1 -6 -4 -6 -8 v-4 z" fill={style.a} opacity="0.35" />
         </pattern>
       </defs>
       <rect width="640" height="360" fill={`url(#g-${patternId})`} />
@@ -50,11 +52,23 @@ function PatternPreview({ theme, id }: { theme: string; id: number }) {
       <circle cx="110" cy="310" r="120" fill={style.a} opacity="0.12" />
       <rect x="40" y="40" width="220" height="10" rx="5" fill={style.a} opacity="0.24" />
       <rect x="40" y="62" width="150" height="8" rx="4" fill={style.b} opacity="0.22" />
+      <path d="M320 108 l92 34 v62 c0 58 -37 110 -92 127 c-55 -17 -92 -69 -92 -127 v-62 z" fill="#ffffff" opacity="0.84" />
+      <rect x="292" y="192" width="56" height="44" rx="8" fill={style.a} opacity="0.85" />
+      <path d="M302 192v-10a18 18 0 0 1 36 0v10" fill="none" stroke={style.a} strokeWidth="8" strokeLinecap="round" />
     </svg>
   );
 }
 
-export function FileCard({ file, onClick }: FileCardProps) {
+const rowStripeClasses = [
+  'from-indigo-500 to-blue-500',
+  'from-emerald-500 to-teal-500',
+  'from-amber-500 to-orange-500',
+  'from-fuchsia-500 to-purple-500',
+];
+
+export function FileCard({ file, rowIndex, onClick }: FileCardProps) {
+  const stripeClass = rowStripeClasses[rowIndex % rowStripeClasses.length];
+
   return (
     <motion.div
       layout
@@ -66,6 +80,7 @@ export function FileCard({ file, onClick }: FileCardProps) {
       onClick={() => onClick(file)}
       className="group cursor-pointer bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
     >
+      <div className={`h-1.5 w-full bg-gradient-to-r ${stripeClass}`} />
       {/* Preview Area */}
       <div className="relative aspect-video bg-gradient-to-br from-indigo-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 overflow-hidden">
         <PatternPreview theme={file.preview} id={file.id} />
@@ -87,12 +102,8 @@ export function FileCard({ file, onClick }: FileCardProps) {
             {file.titulo}
           </h3>
         </div>
-        
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2 flex-grow">
-          {file.descricao}
-        </p>
 
-        <div className="mt-auto space-y-4">
+        <div className="mt-auto space-y-4 pt-1">
           <div className="flex flex-wrap gap-2">
             {file.tags.slice(0, 3).map(tag => (
               <span

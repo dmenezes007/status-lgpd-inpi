@@ -27,6 +27,19 @@ export function FileModal({ file, isOpen, onClose }: FileModalProps) {
     // In a real app, show a toast notification here
   };
 
+  const modalDescription = (() => {
+    if (isInfo) {
+      const blocks = (file.conteudo || '')
+        .split(/\n\s*\n/)
+        .map((part) => part.trim())
+        .filter(Boolean);
+      const candidate = blocks.find((part) => part.toLowerCase() !== file.titulo.toLowerCase()) || file.descricao;
+      return candidate.length > 420 ? `${candidate.slice(0, 417).trim()}...` : candidate;
+    }
+
+    return `Documento institucional relacionado a ${file.titulo}, disponibilizado para consulta oficial, visualizacao direta e download no contexto da implementacao da LGPD no INPI.`;
+  })();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -126,7 +139,7 @@ export function FileModal({ file, isOpen, onClose }: FileModalProps) {
                     Descricao
                   </h3>
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {file.descricao}
+                    {modalDescription}
                   </p>
                 </div>
 
