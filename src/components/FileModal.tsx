@@ -11,6 +11,10 @@ interface FileModalProps {
   onClose: () => void;
 }
 
+function formatTag(tag: string): string {
+  return tag.toLowerCase() === 'lgpd' ? 'LGPD' : tag;
+}
+
 export function FileModal({ file, isOpen, onClose }: FileModalProps) {
   if (!file) return null;
 
@@ -136,7 +140,7 @@ export function FileModal({ file, isOpen, onClose }: FileModalProps) {
                         key={tag}
                         className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 capitalize"
                       >
-                        {tag}
+                        {formatTag(tag)}
                       </span>
                     ))}
                   </div>

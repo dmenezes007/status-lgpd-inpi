@@ -6,16 +6,48 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Header, SortOption } from './components/Header';
-import { TagFilters } from './components/TagFilters';
+import { TagFilters, CategoryOption } from './components/TagFilters';
 import { FileCard } from './components/FileCard';
 import { FileModal } from './components/FileModal';
 import { BackToTop } from './components/BackToTop';
 import { FileItem } from './types';
 import data from './data.json';
 
+const imageByTheme = {
+  legal: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop',
+  governance: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop',
+  security: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200&auto=format&fit=crop',
+  training: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop',
+  communication: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop',
+  data: 'https://images.unsplash.com/photo-1551281044-8bfe974b0e5d?q=80&w=1200&auto=format&fit=crop',
+  policy: 'https://images.unsplash.com/photo-1521790797524-b2497295b8a0?q=80&w=1200&auto=format&fit=crop',
+  document: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop',
+  privacy: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop',
+};
+
+function getThematicPreview(file: FileItem): string {
+  const text = `${file.titulo} ${file.descricao}`.toLowerCase();
+
+  if (file.tipo !== 'informacao') return imageByTheme.document;
+  if (text.includes('legal') || text.includes('princ') || text.includes('termos')) return imageByTheme.legal;
+  if (text.includes('governan') || text.includes('gest')) return imageByTheme.governance;
+  if (text.includes('seguran') || text.includes('incidente')) return imageByTheme.security;
+  if (text.includes('capacit') || text.includes('trein')) return imageByTheme.training;
+  if (text.includes('comunica')) return imageByTheme.communication;
+  if (text.includes('dados') || text.includes('ciclo') || text.includes('transfer')) return imageByTheme.data;
+  if (text.includes('pol') || text.includes('privacidade')) return imageByTheme.policy;
+  return imageByTheme.privacy;
+}
+
+function shortDescription(text: string): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= 110) return clean;
+  return `${clean.slice(0, 107).trim()}...`;
+}
+
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [activeCategory, setActiveCategory] = useState<CategoryOption>('Todas');
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('date-desc');
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -26,29 +58,38 @@ export default function App() {
     return false;
   });
 
-  // Extract unique tags
-  const allTags = useMemo(() => {
-    const tags = new Set<string>();
-    data.forEach(file => file.tags.forEach(tag => tags.add(tag)));
-    return Array.from(tags).sort();
+  const preparedData = useMemo(() => {
+    return (data as FileItem[]).map((item) => ({
+      ...item,
+      descricao: shortDescription(item.descricao),
+      preview: getThematicPreview(item),
+    }));
   }, []);
 
   // Filter and sort logic
   const filteredFiles = useMemo(() => {
-    const filtered = (data as FileItem[]).filter(file => {
+    const filtered = preparedData.filter(file => {
       const searchLower = searchQuery.toLowerCase();
       const matchesSearch = 
         file.titulo.toLowerCase().includes(searchLower) ||
         file.descricao.toLowerCase().includes(searchLower) ||
-        file.tags.some(tag => tag.toLowerCase().includes(searchLower));
+        file.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
+        (file.tipo === 'informacao' ? 'informações' : 'documentos').includes(searchLower);
 
-      const matchesTags = activeTags.length === 0 || 
-        activeTags.every(tag => file.tags.includes(tag));
+      const matchesCategory =
+        activeCategory === 'Todas' ||
+        (activeCategory === 'Informações' && file.tipo === 'informacao') ||
+        (activeCategory === 'Documentos' && file.tipo !== 'informacao');
 
-      return matchesSearch && matchesTags;
+      return matchesSearch && matchesCategory;
     });
 
     return filtered.sort((a, b) => {
+      // Keep documents always before information cards.
+      const aPriority = a.tipo === 'informacao' ? 1 : 0;
+      const bPriority = b.tipo === 'informacao' ? 1 : 0;
+      if (aPriority !== bPriority) return aPriority - bPriority;
+
       switch (sortBy) {
         case 'date-desc':
           return new Date(b.data).getTime() - new Date(a.data).getTime();
@@ -62,7 +103,7 @@ export default function App() {
           return 0;
       }
     });
-  }, [searchQuery, activeTags, sortBy]);
+  }, [preparedData, searchQuery, activeCategory, sortBy]);
 
   // Dark mode toggle
   useEffect(() => {
@@ -72,14 +113,6 @@ export default function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
-
-  const toggleTag = (tag: string) => {
-    setActiveTags(prev => 
-      prev.includes(tag) 
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
-  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -94,10 +127,8 @@ export default function App() {
       />
 
       <TagFilters 
-        tags={allTags}
-        activeTags={activeTags}
-        toggleTag={toggleTag}
-        clearTags={() => setActiveTags([])}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
       />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -134,7 +165,7 @@ export default function App() {
               <button 
                 onClick={() => {
                   setSearchQuery('');
-                  setActiveTags([]);
+                  setActiveCategory('Todas');
                 }}
                 className="mt-6 px-4 py-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
               >
