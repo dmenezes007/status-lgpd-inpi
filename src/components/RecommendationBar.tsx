@@ -56,7 +56,7 @@ export function RecommendationBar() {
                 9.1. recomendar, com fundamento no art. 250, III, do RITCU c/c o art. 11 da Resolucao - TCU 315/2020, a adocao das seguintes providencias: (...)
               </p>
               <p>
-                9.1.9. às organizações auditadas, quanto à questão 5.2. (Tabela 6 peça 949, p. 20), que adotem de medidas para aprimoramento da conformidade do tratamento dos dados pessoais coletados, considerando os critérios previstos na Lei 13.709/2018, art. 5°, inciso XVII, art. 6°, em especial incisos I, Il e III, e arts. 7º, 37, 38 e 40, bem como na norma ABNT NBR ISO/IEC 27701:2019, itens 7.2.1 (Iden>ficação e documentação do propósito), 7.2.2 (Identificação de bases legais), 7.2.5 (Avaliação de impacto de privacidade), 7.2.8 (Registros relativos ao tratamento de dados pessoais), 7.4.1 (Limite de coleta) e 7.4.7 (Retenção).
+                9.1.9. às organizações auditadas, quanto à questão 5.2. (Tabela 6 peça 949, p. 20), que adotem de medidas para aprimoramento da conformidade do tratamento dos dados pessoais coletados, considerando os critérios previstos na Lei 13.709/2018, art. 5°, inciso XVII, art. 6°, em especial incisos I, Il e III, e arts. 7º, 37, 38 e 40, bem como na norma ABNT NBR ISO/IEC 27701:2019, itens 7.2.1 (Identificação e documentação do propósito), 7.2.2 (Identificação de bases legais), 7.2.5 (Avaliação de impacto de privacidade), 7.2.8 (Registros relativos ao tratamento de dados pessoais), 7.4.1 (Limite de coleta) e 7.4.7 (Retenção).
               </p>
             </div>
 
