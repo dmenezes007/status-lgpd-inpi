@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "titulo": "Relatório Estratégico de Inovação 2026",
+    "descricao": "Panorama completo das iniciativas institucionais de inovação e transformação digital.",
+    "tags": ["inovação", "estratégia", "relatório"],
+    "categoria": "Relatórios",
+    "tipo": "pdf",
+    "data": "2026-03-01",
+    "preview": "https://picsum.photos/seed/relatorio1/600/400",
+    "arquivo": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  },
+  {
+    "id": 2,
+    "titulo": "Diretrizes de Propriedade Intelectual",
+    "descricao": "Manual atualizado com as novas normas para registro de patentes e marcas.",
+    "tags": ["propriedade intelectual", "manual", "normas"],
+    "categoria": "Propriedade Intelectual",
+    "tipo": "pdf",
+    "data": "2026-02-15",
+    "preview": "https://picsum.photos/seed/patentes/600/400",
+    "arquivo": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  },
+  {
+    "id": 3,
+    "titulo": "Apresentação: Resultados Q4 2025",
+    "descricao": "Slides da apresentação de encerramento do ano fiscal com métricas e KPIs.",
+    "tags": ["dados", "estatísticas", "apresentação"],
+    "categoria": "Dados e Estatísticas",
+    "tipo": "video",
+    "data": "2026-01-10",
+    "preview": "https://picsum.photos/seed/resultados/600/400",
+    "arquivo": "https://www.w3schools.com/html/mov_bbb.mp4"
+  },
+  {
+    "id": 4,
+    "titulo": "Infográfico: Crescimento Tecnológico",
+    "descricao": "Visualização de dados sobre a adoção de novas tecnologias nos últimos 5 anos.",
+    "tags": ["tecnologia", "infográfico", "dados"],
+    "categoria": "Tecnologia",
+    "tipo": "imagem",
+    "data": "2026-02-28",
+    "preview": "https://picsum.photos/seed/tech/600/800",
+    "arquivo": "https://picsum.photos/seed/tech/1200/1600"
+  },
+  {
+    "id": 5,
+    "titulo": "Planilha de Orçamento 2026",
+    "descricao": "Template oficial para planejamento orçamentário dos departamentos.",
+    "tags": ["dados", "planejamento", "planilha"],
+    "categoria": "Projetos Estratégicos",
+    "tipo": "planilha",
+    "data": "2026-03-05",
+    "preview": "https://picsum.photos/seed/planilha/600/400",
+    "arquivo": "#"
+  },
+  {
+    "id": 6,
+    "titulo": "Guia de Educação Corporativa",
+    "descricao": "Catálogo de cursos e treinamentos disponíveis para colaboradores.",
+    "tags": ["educação", "treinamento", "guia"],
+    "categoria": "Educação",
+    "tipo": "pdf",
+    "data": "2026-01-20",
+    "preview": "https://picsum.photos/seed/educacao/600/400",
+    "arquivo": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  },
+  {
+    "id": 7,
+    "titulo": "Pesquisa de Clima Organizacional",
+    "descricao": "Resultados da pesquisa anual de satisfação e engajamento dos colaboradores.",
+    "tags": ["dados", "pesquisa", "relatório"],
+    "categoria": "Dados e Estatísticas",
+    "tipo": "pdf",
+    "data": "2025-11-15",
+    "preview": "https://picsum.photos/seed/clima/600/400",
+    "arquivo": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  },
+  {
+    "id": 8,
+    "titulo": "Vídeo Institucional 2026",
+    "descricao": "Novo vídeo de apresentação da instituição para parceiros e clientes.",
+    "tags": ["vídeo", "institucional", "apresentação"],
+    "categoria": "Inovação",
+    "tipo": "video",
+    "data": "2026-03-08",
+    "preview": "https://picsum.photos/seed/videoinst/600/400",
+    "arquivo": "https://www.w3schools.com/html/mov_bbb.mp4"
+  }
+]
