@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { FileText, Image as ImageIcon, Video, FileSpreadsheet, File as FileIcon, Eye } from 'lucide-react';
+import { FileText, File as FileIcon, Eye, ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { FileItem, FileType } from '../types';
@@ -12,10 +12,8 @@ interface FileCardProps {
 
 const getIconForType = (type: FileType) => {
   switch (type) {
+    case 'informacao': return <ShieldCheck className="text-indigo-500" size={24} />;
     case 'pdf': return <FileText className="text-red-500" size={24} />;
-    case 'imagem': return <ImageIcon className="text-blue-500" size={24} />;
-    case 'video': return <Video className="text-purple-500" size={24} />;
-    case 'planilha': return <FileSpreadsheet className="text-emerald-500" size={24} />;
     default: return <FileIcon className="text-slate-500" size={24} />;
   }
 };
@@ -33,18 +31,18 @@ export function FileCard({ file, onClick }: FileCardProps) {
       className="group cursor-pointer bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
     >
       {/* Preview Area */}
-      <div className="relative aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden">
-        <img
-          src={file.preview}
-          alt={`Preview de ${file.titulo}`}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+      <div className="relative aspect-video bg-gradient-to-br from-indigo-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 overflow-hidden">
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
           <div className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-900 dark:text-white px-4 py-2 rounded-full font-medium text-sm flex items-center gap-2 shadow-lg">
             <Eye size={16} />
             Visualizar
           </div>
+        </div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center">
+          {getIconForType(file.tipo)}
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            {file.tipo === 'informacao' ? 'Informacao' : 'Documento'}
+          </span>
         </div>
         <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm p-2 rounded-xl shadow-sm">
           {getIconForType(file.tipo)}

@@ -129,7 +129,7 @@ export default function App() {
               </div>
               <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100">Nenhum arquivo encontrado</h3>
               <p className="text-slate-500 dark:text-slate-400 mt-1 max-w-sm">
-                Tente ajustar seus filtros ou termos de busca para encontrar o que procura.
+                Tente ajustar seus filtros ou termos de busca para encontrar o registro desejado.
               </p>
               <button 
                 onClick={() => {
@@ -138,7 +138,7 @@ export default function App() {
                 }}
                 className="mt-6 px-4 py-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
               >
-                Limpar todos os filtros
+                Limpar filtros
               </button>
             </motion.div>
           )}

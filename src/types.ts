@@ -1,4 +1,4 @@
-export type FileType = 'pdf' | 'imagem' | 'video' | 'planilha' | 'documento' | 'outro';
+export type FileType = 'informacao' | 'pdf' | 'documento';
 
 export interface FileItem {
   id: number;
@@ -10,4 +10,5 @@ export interface FileItem {
   data: string;
   preview: string;
   arquivo: string;
+  conteudo?: string;
 }

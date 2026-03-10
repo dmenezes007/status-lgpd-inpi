@@ -1,4 +1,4 @@
-import { Search, X, Moon, Sun, Library, ArrowDownAZ, CalendarDays } from 'lucide-react';
+import { Search, X, Moon, Sun, ShieldCheck, ArrowDownAZ, CalendarDays } from 'lucide-react';
 import { cn } from '../utils';
 
 export type SortOption = 'date-desc' | 'date-asc' | 'title-asc' | 'title-desc';
@@ -29,10 +29,10 @@ export function Header({
         {/* Logo / Title */}
         <div className="flex items-center gap-2 flex-shrink-0">
           <div className="bg-indigo-600 text-white p-1.5 rounded-lg">
-            <Library size={20} />
+            <ShieldCheck size={20} />
           </div>
           <h1 className="text-lg font-semibold hidden sm:block tracking-tight">
-            Acervo Institucional
+            Status de Implementacao da LGPD
           </h1>
         </div>
 
@@ -46,7 +46,7 @@ export function Header({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar por título, descrição ou tag..."
+              placeholder="Buscar por titulo, descricao, tag ou tipo..."
               className="block w-full pl-10 pr-10 py-2 border border-slate-200 dark:border-slate-700 rounded-full leading-5 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all"
             />
             {searchQuery && (
@@ -63,7 +63,7 @@ export function Header({
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
           <div className="text-sm text-slate-500 dark:text-slate-400 hidden lg:block mr-2">
-            <span className="font-medium text-slate-900 dark:text-slate-100">{resultCount}</span> arquivos
+            <span className="font-medium text-slate-900 dark:text-slate-100">{resultCount}</span> registros
           </div>
           
           <div className="relative group">

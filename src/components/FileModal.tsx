@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Download, Link as LinkIcon, ExternalLink } from 'lucide-react';
+import { X, Download, Link as LinkIcon, ExternalLink, ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { FileItem } from '../types';
@@ -14,8 +14,12 @@ interface FileModalProps {
 export function FileModal({ file, isOpen, onClose }: FileModalProps) {
   if (!file) return null;
 
+  const isInfo = file.tipo === 'informacao';
+  const safeFileUrl = file.arquivo ? encodeURI(file.arquivo) : '';
+
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const finalLink = isInfo ? window.location.href : `${window.location.origin}${safeFileUrl}`;
+    navigator.clipboard.writeText(finalLink);
     // In a real app, show a toast notification here
   };
 
@@ -66,35 +70,40 @@ export function FileModal({ file, isOpen, onClose }: FileModalProps) {
               
               {/* Preview Section */}
               <div className="flex-1 min-h-[400px] bg-slate-100 dark:bg-slate-950 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 flex items-center justify-center relative group">
-                {file.tipo === 'video' ? (
-                  <video
-                    controls
-                    className="w-full h-full object-contain"
-                    poster={file.preview}
-                  >
-                    <source src={file.arquivo} type="video/mp4" />
-                    Seu navegador não suporta a tag de vídeo.
-                  </video>
+                {isInfo ? (
+                  <div className="w-full h-full overflow-y-auto p-6 sm:p-8">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 p-2 rounded-lg">
+                        <ShieldCheck size={20} />
+                      </div>
+                      <h3 className="font-semibold text-slate-900 dark:text-slate-100">Informacoes da Implementacao da LGPD</h3>
+                    </div>
+                    <div className="prose prose-slate dark:prose-invert max-w-none whitespace-pre-wrap leading-relaxed text-slate-700 dark:text-slate-200">
+                      {file.conteudo || file.descricao}
+                    </div>
+                  </div>
                 ) : file.tipo === 'pdf' ? (
                   <iframe
-                    src={`${file.arquivo}#toolbar=0`}
+                    src={`${safeFileUrl}#toolbar=0`}
                     className="w-full h-full min-h-[500px]"
                     title={file.titulo}
                   />
                 ) : (
-                  <img
-                    src={file.preview}
-                    alt={file.titulo}
-                    className="w-full h-full object-contain"
-                    referrerPolicy="no-referrer"
-                  />
+                  <a
+                    href={safeFileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors"
+                  >
+                    Abrir documento
+                  </a>
                 )}
                 
                 {/* Overlay for non-interactive previews */}
-                {file.tipo !== 'video' && file.tipo !== 'pdf' && (
+                {!isInfo && file.tipo !== 'pdf' && (
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center pointer-events-none">
                     <a
-                      href={file.arquivo}
+                      href={safeFileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-900 dark:text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 shadow-xl pointer-events-auto hover:scale-105"
@@ -110,7 +119,7 @@ export function FileModal({ file, isOpen, onClose }: FileModalProps) {
               <div className="w-full lg:w-80 flex flex-col gap-6 flex-shrink-0">
                 <div>
                   <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-3">
-                    Descrição
+                    Descricao
                   </h3>
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                     {file.descricao}
@@ -134,32 +143,35 @@ export function FileModal({ file, isOpen, onClose }: FileModalProps) {
                 </div>
 
                 <div className="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800 space-y-3">
-                  <a
-                    href={file.arquivo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium transition-colors"
+                  {!isInfo && (
+                    <>
+                      <a
+                        href={safeFileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium transition-colors"
+                      >
+                        <ExternalLink size={18} />
+                        Visualizar Completo
+                      </a>
+                      <a
+                        href={safeFileUrl}
+                        download
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl font-medium transition-colors"
+                      >
+                        <Download size={18} />
+                        Baixar
+                      </a>
+                    </>
+                  )}
+                  <button
+                    onClick={handleCopyLink}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl font-medium transition-colors"
+                    title="Copiar Link"
                   >
-                    <ExternalLink size={18} />
-                    Visualizar Completo
-                  </a>
-                  <div className="flex gap-3">
-                    <a
-                      href={file.arquivo}
-                      download
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl font-medium transition-colors"
-                    >
-                      <Download size={18} />
-                      Baixar
-                    </a>
-                    <button
-                      onClick={handleCopyLink}
-                      className="flex items-center justify-center p-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl transition-colors"
-                      title="Copiar Link"
-                    >
-                      <LinkIcon size={18} />
-                    </button>
-                  </div>
+                    <LinkIcon size={18} />
+                    {isInfo ? 'Copiar link desta informacao' : 'Copiar link do documento'}
+                  </button>
                 </div>
               </div>
             </div>
