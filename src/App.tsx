@@ -13,36 +13,27 @@ import { BackToTop } from './components/BackToTop';
 import { FileItem } from './types';
 import data from './data.json';
 
-const imageByTheme = {
-  legal: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop',
-  governance: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop',
-  security: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200&auto=format&fit=crop',
-  training: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop',
-  communication: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop',
-  data: 'https://images.unsplash.com/photo-1551281044-8bfe974b0e5d?q=80&w=1200&auto=format&fit=crop',
-  policy: 'https://images.unsplash.com/photo-1521790797524-b2497295b8a0?q=80&w=1200&auto=format&fit=crop',
-  document: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop',
-  privacy: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200&auto=format&fit=crop',
-};
+type CardTheme = 'legal' | 'governance' | 'security' | 'training' | 'communication' | 'data' | 'policy' | 'document' | 'privacy';
 
-function getThematicPreview(file: FileItem): string {
+function getCardTheme(file: FileItem): CardTheme {
   const text = `${file.titulo} ${file.descricao}`.toLowerCase();
 
-  if (file.tipo !== 'informacao') return imageByTheme.document;
-  if (text.includes('legal') || text.includes('princ') || text.includes('termos')) return imageByTheme.legal;
-  if (text.includes('governan') || text.includes('gest')) return imageByTheme.governance;
-  if (text.includes('seguran') || text.includes('incidente')) return imageByTheme.security;
-  if (text.includes('capacit') || text.includes('trein')) return imageByTheme.training;
-  if (text.includes('comunica')) return imageByTheme.communication;
-  if (text.includes('dados') || text.includes('ciclo') || text.includes('transfer')) return imageByTheme.data;
-  if (text.includes('pol') || text.includes('privacidade')) return imageByTheme.policy;
-  return imageByTheme.privacy;
+  if (file.tipo !== 'informacao') return 'document';
+  if (text.includes('legal') || text.includes('princ') || text.includes('termos')) return 'legal';
+  if (text.includes('governan') || text.includes('gest')) return 'governance';
+  if (text.includes('seguran') || text.includes('incidente')) return 'security';
+  if (text.includes('capacit') || text.includes('trein')) return 'training';
+  if (text.includes('comunica')) return 'communication';
+  if (text.includes('dados') || text.includes('ciclo') || text.includes('transfer')) return 'data';
+  if (text.includes('pol') || text.includes('privacidade')) return 'policy';
+  return 'privacy';
 }
 
-function shortDescription(text: string): string {
-  const clean = text.replace(/\s+/g, ' ').trim();
-  if (clean.length <= 110) return clean;
-  return `${clean.slice(0, 107).trim()}...`;
+function buildCardDescription(item: FileItem): string {
+  if (item.tipo === 'informacao') {
+    return `Resumo objetivo sobre ${item.titulo}.`;
+  }
+  return 'Documento oficial para consulta e download.';
 }
 
 export default function App() {
@@ -61,8 +52,8 @@ export default function App() {
   const preparedData = useMemo(() => {
     return (data as FileItem[]).map((item) => ({
       ...item,
-      descricao: shortDescription(item.descricao),
-      preview: getThematicPreview(item),
+      descricao: buildCardDescription(item),
+      preview: getCardTheme(item),
     }));
   }, []);
 
