@@ -15,47 +15,27 @@ function formatTag(tag: string): string {
   return tag.toLowerCase();
 }
 
-const patternStyles: Record<string, { a: string; b: string; c: string; d: string }> = {
-  legal: { a: '#312e81', b: '#6366f1', c: '#c7d2fe', d: '#e0e7ff' },
-  governance: { a: '#14532d', b: '#22c55e', c: '#bbf7d0', d: '#dcfce7' },
-  security: { a: '#7f1d1d', b: '#ef4444', c: '#fecaca', d: '#fee2e2' },
-  training: { a: '#713f12', b: '#f59e0b', c: '#fde68a', d: '#fffbeb' },
-  communication: { a: '#0c4a6e', b: '#06b6d4', c: '#a5f3fc', d: '#ecfeff' },
-  data: { a: '#1e3a8a', b: '#3b82f6', c: '#bfdbfe', d: '#eff6ff' },
-  policy: { a: '#581c87', b: '#a855f7', c: '#e9d5ff', d: '#faf5ff' },
-  document: { a: '#3f3f46', b: '#71717a', c: '#d4d4d8', d: '#f4f4f5' },
-  privacy: { a: '#164e63', b: '#0891b2', c: '#bae6fd', d: '#ecfeff' },
+const previewGradients: Record<string, { base: string; accentA: string; accentB: string }> = {
+  legal: { base: 'from-blue-700 via-indigo-500 to-sky-300', accentA: 'bg-blue-900/30', accentB: 'bg-sky-100/45' },
+  governance: { base: 'from-emerald-700 via-green-500 to-lime-300', accentA: 'bg-emerald-900/30', accentB: 'bg-lime-100/45' },
+  security: { base: 'from-rose-700 via-red-500 to-orange-300', accentA: 'bg-rose-900/30', accentB: 'bg-orange-100/45' },
+  training: { base: 'from-amber-700 via-yellow-500 to-orange-200', accentA: 'bg-amber-900/30', accentB: 'bg-yellow-100/45' },
+  communication: { base: 'from-cyan-700 via-sky-500 to-teal-300', accentA: 'bg-cyan-900/30', accentB: 'bg-teal-100/45' },
+  data: { base: 'from-blue-800 via-cyan-500 to-cyan-200', accentA: 'bg-blue-950/30', accentB: 'bg-cyan-100/45' },
+  policy: { base: 'from-violet-700 via-fuchsia-500 to-pink-300', accentA: 'bg-violet-900/30', accentB: 'bg-pink-100/45' },
+  document: { base: 'from-slate-700 via-zinc-500 to-stone-300', accentA: 'bg-slate-900/30', accentB: 'bg-stone-100/45' },
+  privacy: { base: 'from-teal-700 via-cyan-500 to-blue-300', accentA: 'bg-teal-900/30', accentB: 'bg-blue-100/45' },
 };
 
-function PatternPreview({ theme, id }: { theme: string; id: number }) {
-  const style = patternStyles[theme] || patternStyles.privacy;
-  const patternId = `p-${theme}-${id}`;
+function GradientPreview({ theme }: { theme: string }) {
+  const gradient = previewGradients[theme] || previewGradients.privacy;
 
   return (
-    <svg viewBox="0 0 640 360" className="w-full h-full" aria-hidden="true">
-      <defs>
-        <linearGradient id={`g-${patternId}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={style.d} />
-          <stop offset="100%" stopColor={style.c} />
-        </linearGradient>
-        <pattern id={patternId} x="0" y="0" width="44" height="44" patternUnits="userSpaceOnUse">
-          <rect width="44" height="44" fill="transparent" />
-          <circle cx="8" cy="8" r="3" fill={style.b} opacity="0.45" />
-          <path d="M0 44L44 0" stroke={style.a} strokeWidth="1.5" opacity="0.35" />
-          <path d="M22 0V44" stroke={style.b} strokeWidth="1" opacity="0.25" />
-          <path d="M32 23 l6 2 v4 c0 4 -2.5 7 -6 8 c-3.5 -1 -6 -4 -6 -8 v-4 z" fill={style.a} opacity="0.35" />
-        </pattern>
-      </defs>
-      <rect width="640" height="360" fill={`url(#g-${patternId})`} />
-      <rect width="640" height="360" fill={`url(#${patternId})`} />
-      <circle cx="530" cy="66" r="88" fill={style.b} opacity="0.18" />
-      <circle cx="110" cy="310" r="120" fill={style.a} opacity="0.12" />
-      <rect x="40" y="40" width="220" height="10" rx="5" fill={style.a} opacity="0.24" />
-      <rect x="40" y="62" width="150" height="8" rx="4" fill={style.b} opacity="0.22" />
-      <path d="M320 108 l92 34 v62 c0 58 -37 110 -92 127 c-55 -17 -92 -69 -92 -127 v-62 z" fill="#ffffff" opacity="0.86" />
-      <circle cx="320" cy="214" r="38" fill={style.a} opacity="0.9" />
-      <path d="M303 214 l12 12 l23 -24" fill="none" stroke="#ffffff" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div className={`absolute inset-0 bg-gradient-to-br ${gradient.base}`} aria-hidden="true">
+      <div className={`absolute -top-14 -right-10 h-44 w-44 rounded-full blur-2xl ${gradient.accentB}`} />
+      <div className={`absolute -bottom-16 -left-12 h-52 w-52 rounded-full blur-2xl ${gradient.accentA}`} />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.28),transparent_42%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.16),transparent_46%)]" />
+    </div>
   );
 }
 
@@ -82,8 +62,8 @@ export function FileCard({ file, rowIndex, onClick }: FileCardProps) {
     >
       <div className={`h-1.5 w-full bg-gradient-to-r ${stripeClass}`} />
       {/* Preview Area */}
-      <div className="relative aspect-video bg-gradient-to-br from-indigo-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 overflow-hidden">
-        <PatternPreview theme={file.preview} id={file.id} />
+      <div className="relative aspect-video overflow-hidden">
+        <GradientPreview theme={file.preview} />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
           <div className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-900 dark:text-white px-4 py-2 rounded-full font-medium text-sm flex items-center gap-2 shadow-lg">
             <Eye size={16} />
