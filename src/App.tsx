@@ -6,6 +6,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Header, SortOption } from './components/Header';
+import { RecommendationBar } from './components/RecommendationBar';
 import { TagFilters, CategoryOption } from './components/TagFilters';
 import { FileCard } from './components/FileCard';
 import { FileModal } from './components/FileModal';
@@ -116,6 +117,8 @@ export default function App() {
         sortBy={sortBy}
         setSortBy={setSortBy}
       />
+
+      <RecommendationBar />
 
       <TagFilters 
         activeCategory={activeCategory}

@@ -32,7 +32,7 @@ export function Header({
             <ShieldCheck size={20} />
           </div>
           <h1 className="text-lg font-semibold hidden sm:block tracking-tight">
-            Status de Implementacao da LGPD
+            Status LGPD
           </h1>
         </div>
 
