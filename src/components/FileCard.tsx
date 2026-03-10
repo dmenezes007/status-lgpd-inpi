@@ -12,7 +12,7 @@ interface FileCardProps {
 }
 
 function formatTag(tag: string): string {
-  return tag.toLowerCase() === 'lgpd' ? 'LGPD' : tag;
+  return tag.toLowerCase();
 }
 
 const patternStyles: Record<string, { a: string; b: string; c: string; d: string }> = {
@@ -52,9 +52,9 @@ function PatternPreview({ theme, id }: { theme: string; id: number }) {
       <circle cx="110" cy="310" r="120" fill={style.a} opacity="0.12" />
       <rect x="40" y="40" width="220" height="10" rx="5" fill={style.a} opacity="0.24" />
       <rect x="40" y="62" width="150" height="8" rx="4" fill={style.b} opacity="0.22" />
-      <path d="M320 108 l92 34 v62 c0 58 -37 110 -92 127 c-55 -17 -92 -69 -92 -127 v-62 z" fill="#ffffff" opacity="0.84" />
-      <rect x="292" y="192" width="56" height="44" rx="8" fill={style.a} opacity="0.85" />
-      <path d="M302 192v-10a18 18 0 0 1 36 0v10" fill="none" stroke={style.a} strokeWidth="8" strokeLinecap="round" />
+      <path d="M320 108 l92 34 v62 c0 58 -37 110 -92 127 c-55 -17 -92 -69 -92 -127 v-62 z" fill="#ffffff" opacity="0.86" />
+      <circle cx="320" cy="214" r="38" fill={style.a} opacity="0.9" />
+      <path d="M303 214 l12 12 l23 -24" fill="none" stroke="#ffffff" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -108,7 +108,7 @@ export function FileCard({ file, rowIndex, onClick }: FileCardProps) {
             {file.tags.slice(0, 3).map(tag => (
               <span
                 key={tag}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 capitalize"
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
               >
                 {formatTag(tag)}
               </span>

@@ -31,11 +31,11 @@ export function RecommendationBar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center gap-3 mb-4">
             <span className="relative flex h-3 w-3 flex-shrink-0" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-70" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-red-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-70" />
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-indigo-600" />
             </span>
             <h2 className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 tracking-wide">
-              Recomendacao Prioritaria - TCU
+              Recomendação Prioritária - TCU
             </h2>
           </div>
 
@@ -127,7 +127,7 @@ export function RecommendationBar() {
 
               <div className="p-4 flex-1 min-h-[560px]">
                 <iframe
-                  src={`${encodeURI(selectedFile.href)}#toolbar=0`}
+                  src={encodeURI(selectedFile.href)}
                   title={selectedFile.label}
                   className="w-full h-full rounded-xl border border-slate-200 dark:border-slate-700"
                 />
