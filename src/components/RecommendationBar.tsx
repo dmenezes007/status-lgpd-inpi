@@ -53,17 +53,7 @@ export function RecommendationBar() {
             <div className="md:col-span-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 space-y-2">
               <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Texto da Recomendacao</p>
               <p>
-                9.1. recomendar, com fundamento no art. 250, III, do RITCU c/c o art. 11 da Resolucao - TCU 315/2020,
-                a adocao das seguintes providencias:
-              </p>
-              <p>(...)</p>
-              <p>
-                9.1.9. as organizacoes auditadas, quanto a questao 5.2 (Tabela 6 peca 949, p. 20), que adotem medidas para
-                aprimoramento da conformidade do tratamento dos dados pessoais coletados, considerando os criterios previstos na
-                Lei 13.709/2018, art. 5o, inciso XVIII, art. 6o, em especial incisos I, II e III, e arts. 7o, 37, 38 e 40, bem como
-                na norma ABNT NBR ISO/IEC 27701:2019, itens 7.2.1 (Identificacao e documentacao do proposito), 7.2.2
-                (Identificacao de bases legais), 7.2.5 (Avaliacao de impacto de privacidade), 7.2.8 (Registros relativos ao
-                tratamento de dados pessoais), 7.4.1 (Limite de coleta) e 7.4.7 (Retencao).
+                9.1. recomendar, com fundamento no art. 250, III, do RITCU c/c o art. 11 da Resolucao - TCU 315/2020, a adocao das seguintes providencias: (...)
               </p>
             </div>
 
